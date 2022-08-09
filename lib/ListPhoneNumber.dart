@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/PhoneNumber.dart';
 
@@ -69,6 +70,43 @@ class _ListPhoneNumberState extends State<ListPhoneNumber> {
     ];
   }
 
+  showAlertDialog(BuildContext context, int idx) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Yes"),
+      onPressed: () {
+        setState(() {
+          data.removeAt(idx);
+          Navigator.pop(context);
+        });
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Delete data"),
+      content: Text("Would you like to delete this item ?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,23 +119,30 @@ class _ListPhoneNumberState extends State<ListPhoneNumber> {
           child: ListView.builder(
               itemCount: data.length,
               itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  margin: EdgeInsets.all(15),
-                  child: Row(
-                    children: [
-                      Container(
-                          margin: EdgeInsets.only(right: 20),
-                          width: 20,
-                          height: 20,
-                          child: Icon(Icons.people)),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                return InkWell(
+                  onTap: () {
+                    showAlertDialog(context, index);
+                  },
+                  child: Card(
+                    child: Container(
+                      margin: EdgeInsets.all(15),
+                      child: Row(
                         children: [
-                          Text(data[index].name),
-                          Text(data[index].phoneNumber)
+                          Container(
+                              margin: EdgeInsets.only(right: 20),
+                              width: 20,
+                              height: 20,
+                              child: Icon(Icons.people)),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(data[index].name),
+                              Text(data[index].phoneNumber)
+                            ],
+                          )
                         ],
-                      )
-                    ],
+                      ),
+                    ),
                   ),
                 );
               }),
