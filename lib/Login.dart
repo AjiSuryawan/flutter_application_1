@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ListPhoneNumber.dart';
 import 'package:flutter_application_1/Register.dart';
+import 'package:flutter_application_1/TabbarExample.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -56,7 +57,7 @@ class _LoginState extends State<Login> {
                       //pindah tampilan
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
-                              builder: (context) => ListPhoneNumber()),
+                              builder: (context) => TabbarExample()),
                           (Route<dynamic> route) => false);
                     } else {
                       ScaffoldMessenger.of(context)
